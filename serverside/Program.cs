@@ -18,6 +18,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectConnectio
 
 //Inject the Repository
 builder.Services.AddScoped<IUserRepository, SQLUserRepository>();
+builder.Services.AddScoped<IPostRepository, SQLPostRepository>();
+
 
 builder.Services.AddAutoMapper(typeof(AutoMappersProfile));
 

@@ -24,8 +24,12 @@ namespace serverside.Mappings
         public AutoMappersProfile()
         {
             CreateMap<Users, UserDto>().ReverseMap();
-            CreateMap<AddUserRequestDto, Users>().ReverseMap();             //this will be used to convert DTO into the domain model
+            CreateMap<AddUserRequestDto, Users>().ReverseMap();    //this will be used to convert DTO into the domain model
             CreateMap<UpdateUserRequestDto, Users>().ReverseMap();
+
+            CreateMap<Posts, PostDto>().ReverseMap();
+            CreateMap<AddPostRequestDto, Posts>().ReverseMap();    //this will be used to convert DTO into the domain model
+
         }
     }
 }

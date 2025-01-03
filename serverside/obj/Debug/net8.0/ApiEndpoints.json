@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "serverside.Controllers.PostsController",
+    "Method": "GetAllPosts",
+    "RelativePath": "api/Posts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverside.Controllers.PostsController",
+    "Method": "Create",
+    "RelativePath": "api/Posts",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "addPostRequestDto",
+        "Type": "serverside.Models.DTOs.AddPostRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "serverside.Controllers.UsersController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Users",
@@ -73,6 +99,22 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverside.Controllers.UsersController",
+    "Method": "LoginToProfile",
+    "RelativePath": "api/Users/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginUserRequestDto",
+        "Type": "serverside.Models.DTOs.LoginUserRequestDto",
         "IsRequired": true
       }
     ],

@@ -16,43 +16,34 @@ namespace serverside.Data
 
         public DbSet<Users> Users { get; set; }
 
-
+        //// DbSets for each entity
+        //public DbSet<Users> Users { get; set; }
+        public DbSet<Posts> Posts { get; set; }
+        //public DbSet<Tags> Tags { get; set; }
+        //public DbSet<PostTags> PostTags { get; set; }
+        //public DbSet<Categories> Categories { get; set; }
+        //public DbSet<Votes> Votes { get; set; }
+        //public DbSet<Notifications> Notifications { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // Configure Users
+            modelBuilder.Entity<Users>()
+                .HasKey(u => u.Id);
 
-            modelBuilder.Entity<Users>().HasData(
-                new Users
-                {
-                    Id = 5,
-                    Username = "UserFive",
-                    Email = "user5@example.com",
-                    Password = HashPassword("password5"), // Replace with a hashed password
-                    Role = "Member",
-                    ReputationPoints = 6666,
-                    CreatedAt = DateTime.UtcNow
-                },
-                new Users
-                {
-                    Id = 7,
-                    Username = "UserSeven",
-                    Email = "user7@example.com",
-                    Password = HashPassword("password7"), // Replace with a hashed password
-                    Role = "Admin",
-                    ReputationPoints = 8888,
-                    CreatedAt = DateTime.UtcNow
-                }
-            );
-        }
+            modelBuilder.Entity<Users>()
+                .HasMany(u => u.Posts)
+                .WithOne(p => p.User)
+                .HasForeignKey(p => p.UserId);
 
-        private string HashPassword(string password)
-        {
-            // Replace with actual hashing logic
-            using (var sha256 = SHA256.Create())
-            {
-                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(bytes);
-            }
+            // Configure Posts
+            modelBuilder.Entity<Posts>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Posts>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Posts)
+                .HasForeignKey(p => p.UserId);
         }
     }
 }

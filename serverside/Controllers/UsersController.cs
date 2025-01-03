@@ -79,7 +79,7 @@ namespace serverside.Controllers
             var userDto = mapper.Map<UserDto>(userDomainModel);
 
             return CreatedAtAction(nameof(GetUserById), new { id = userDomainModel.Id }, userDto);
-        
+
         }
 
         // UPDATE USER
@@ -93,22 +93,22 @@ namespace serverside.Controllers
                 //Map  DTO To domain model
                 var userDomainModel = mapper.Map<Users>(updateUserRequestDto);
 
-            //check if user exist
-            userDomainModel = await userRepository.UpdateAsync(id, userDomainModel);
+                //check if user exist
+                userDomainModel = await userRepository.UpdateAsync(id, userDomainModel);
 
-            if (userDomainModel == null)
-            {
-                return NotFound($"User with ID {id} not found.");
-            }
+                if (userDomainModel == null)
+                {
+                    return NotFound($"User with ID {id} not found.");
+                }
 
-            // Map Domain Models to DTOs
-            var userDto = mapper.Map<UserDto>(userDomainModel);
+                // Map Domain Models to DTOs
+                var userDto = mapper.Map<UserDto>(userDomainModel);
 
-            return Ok(new
-            {
-                Message = "User updated successfully.",
-                UpdatedUser = userDto
-            });
+                return Ok(new
+                {
+                    Message = "User updated successfully.",
+                    UpdatedUser = userDto
+                });
             }
             else
             {
@@ -136,6 +136,18 @@ namespace serverside.Controllers
 
             return Ok(userDto);
         }
-    }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginToProfile([FromBody] LoginUserRequestDto loginUserRequestDto)
+        {
+            var userDomain = await userRepository.GetUserByEmailAsync(loginUserRequestDto.Email);
+            if (userDomain == null || (loginUserRequestDto.Password != userDomain.Password))
+            {
+                return Unauthorized("Invalid email or password.");
+            }
+            var userDto = mapper.Map<UserDto>(userDomain);
+            return Ok(userDto);
+        }
+
+    }
 }
